@@ -67,9 +67,6 @@ const config = {
       template: require('html-webpack-template'),
       inject: false,
       appMountId: 'root',
-    }),
-    new BundleAnalyzerPlugin({
-      openAnalyzer: false
     })
   ],
   optimization: {
@@ -90,6 +87,14 @@ module.exports = (env, argv) => {
   if (argv.hot) {
     config.output.filename = '[name].[hash].js';
   }
+  if(!argv.mode === 'production'){
+    config.plugins = [
+      ...config.plugins,
+      new BundleAnalyzerPlugin({
+        openAnalyzer: false
+      })
+    ]
+  } // @TODO: Сделать нормально
 
   return config;
 };
