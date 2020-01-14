@@ -23,14 +23,16 @@ jobs:
       with:
         path: node_modules
         restore-keys: npm-deps-${{hashFiles('yarn.lock')}}
-        
+
     - name: get deps
+      run: /
+        yarn install --frozen-lockfile
+
+    - name: caching
       uses: actions/cache@v1
       with:
         path: node_modules
         key: npm-deps-${{hashFiles('yarn.lock')}}
-      run: /
-        yarn install --frozen-lockfile
 
     - name: build, and test
       run: |
