@@ -2,6 +2,7 @@
 const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin;
 
 const config = {
   entry: [
@@ -16,7 +17,7 @@ const config = {
     rules: [
       {
         test: /\.(js|jsx)$/,
-        use: 'babel-loader',
+        use: ['babel-loader', 'eslint-loader'],
         exclude: /node_modules/,
       },
       {
@@ -67,6 +68,9 @@ const config = {
       inject: false,
       appMountId: 'root',
     }),
+    new BundleAnalyzerPlugin({
+      openAnalyzer: false
+    })
   ],
   optimization: {
     runtimeChunk: 'single',
