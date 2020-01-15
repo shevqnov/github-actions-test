@@ -47,13 +47,14 @@ jobs:
     - name: Cache node modules
       uses: actions/cache@v1
       with:
+        id: node_modules-cache
         path: node_modules
         key: ${{ runner.os }}-deps-${{ hashFiles('yarn.lock') }}
         restore-keys: |
           ${{ runner.os }}-deps-
 
     - name: get deps
-      if: steps.cache.outputs.cache-hit != 'true'
+      if: steps.node_modules-cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
 
     - name: test
