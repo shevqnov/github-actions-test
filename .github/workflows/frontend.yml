@@ -2,6 +2,32 @@ name: build test and lint
 
 on: [push]
 
+# jobs:
+#   deps:
+#     runs-on: ubuntu-latest
+    
+#     steps:
+#     - uses: actions/checkout@v1
+#     - name: Setup Node
+#       uses: actions/setup-node@v1
+#       with:
+#         node-version: 10
+
+#     - name: Cache node modules
+#       uses: actions/cache@v1
+#       with:
+#         path: node_modules
+#         key: ${{ runner.os }}-deps-${{ hashFiles('yarn.lock') }}
+#         restore-keys: |
+#           ${{ runner.os }}-deps-${{ env.cache-name }}-
+#           ${{ runner.os }}-deps-
+#           ${{ runner.os }}-
+
+#     - name: Get deps
+#       runs: yarn install --frozen-lockfile
+
+
+
 jobs:
   build:
 
@@ -22,13 +48,12 @@ jobs:
       uses: actions/cache@v1
       with:
         path: node_modules
-        key: ${{ runner.os }}-node-${{ hashFiles('yarn.lock') }}
+        key: ${{ runner.os }}-deps-${{ hashFiles('yarn.lock') }}
         restore-keys: |
-          ${{ runner.os }}-build-${{ env.cache-name }}-
-          ${{ runner.os }}-build-
-          ${{ runner.os }}-
+          ${{ runner.os }}-deps-
 
     - name: get deps
+      if: steps.cache.outputs.cache-hit != 'true'
       run: yarn install --frozen-lockfile
 
     - name: test
@@ -39,6 +64,6 @@ jobs:
 
     - name: build
       run: yarn build-prod
-      
+
       env:
         CI: true
