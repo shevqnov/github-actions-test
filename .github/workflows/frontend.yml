@@ -28,11 +28,17 @@ jobs:
           ${{ runner.os }}-build-
           ${{ runner.os }}-
 
-    - name: build test and lint
-      run: |
-        yarn install --frozen-lockfile
-        yarn build-prod
-        yarn test
-        yarn lint
+    - name: get deps
+      run: yarn install --frozen-lockfile
+
+    - name: test
+      run: yarn test
+
+    - name: lint
+      run: yarn lint
+
+    - name: build
+      run: yarn build-prod
+      
       env:
         CI: true
