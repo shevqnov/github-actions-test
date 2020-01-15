@@ -1,48 +1,18 @@
-name: build test and lint
+name: Test, lint, build and deploy
 
 on: [push]
-
-# jobs:
-#   deps: 
-#     runs-on: ubuntu-latest
-    
-#     steps:
-#     - uses: actions/checkout@v1
-#     - name: Setup Node
-#       uses: actions/setup-node@v1
-#       with:
-#         node-version: 10
-
-#     - name: Cache node modules
-#       uses: actions/cache@v1
-#       with:
-#         path: node_modules
-#         key: ${{ runner.os }}-deps-${{ hashFiles('yarn.lock') }}
-#         restore-keys: |
-#           ${{ runner.os }}-deps-${{ env.cache-name }}-
-#           ${{ runner.os }}-deps-
-#           ${{ runner.os }}-
-
-#     - name: Get deps
-#       runs: yarn install --frozen-lockfile
-
-
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
 
-    strategy:
-      matrix:
-        node-version: [10]
-
     steps:
     - uses: actions/checkout@v1
-    - name: Use Node.js ${{ matrix.node-version }}
+    - name: Use Node.js 10
       uses: actions/setup-node@v1
       with:
-        node-version: ${{ matrix.node-version }}
+        node-version: 10
 
     - name: Cache node modules
       uses: actions/cache@v1
@@ -70,8 +40,8 @@ jobs:
       uses: JamesIves/github-pages-deploy-action@releases/v3
       with:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
-        BRANCH: gh-pages # The branch the action should deploy to.
-        FOLDER: dist # The folder the action should deploy.
+        BRANCH: gh-pages
+        FOLDER: dist
 
       env:
         CI: true
