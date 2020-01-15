@@ -3,7 +3,7 @@ name: build test and lint
 on: [push]
 
 # jobs:
-#   deps:
+#   deps: 
 #     runs-on: ubuntu-latest
     
 #     steps:
