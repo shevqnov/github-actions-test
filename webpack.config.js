@@ -15,11 +15,13 @@ const config = {
   },
   module: {
     rules: [
-      {
-        test: /\.(js|jsx)$/,
-        use: ['babel-loader', 'eslint-loader'],
-        exclude: /node_modules/,
-      },
+      { test: /\.(t|j)sx?$/, use: { loader: 'ts-loader' }, exclude: /node_modules/ },
+      { enforce: "pre", test: /\.js$/, exclude: /node_modules/, loader: "source-map-loader" },
+      // {
+      //   test: /\.(js|jsx)$/,
+      //   use: ['babel-loader', 'eslint-loader'],
+      //   exclude: /node_modules/,
+      // },
       {
         test: /\.css$/,
         use: [
@@ -51,10 +53,7 @@ const config = {
     ],
   },
   resolve: {
-    extensions: [
-      '.js',
-      '.jsx',
-    ],
+    extensions: [".ts", ".tsx", ".js", ".jsx"],
     alias: {
       'react-dom': '@hot-loader/react-dom',
     },
@@ -62,6 +61,7 @@ const config = {
   devServer: {
     contentBase: './dist',
   },
+  devtool: "source-map",
   plugins: [
     new HtmlWebpackPlugin({
       template: require('html-webpack-template'),
