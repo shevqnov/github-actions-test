@@ -1,0 +1,9 @@
+.test {
+    padding-left: 0;
+    background-color: #ccc;
+}
+
+.button {
+    border-radius: 3px;
+    padding: 4px;
+}

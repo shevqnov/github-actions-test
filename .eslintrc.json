@@ -27,7 +27,15 @@
     ],
     "rules": {
         "react/prop-types": 0,
-        "jsx-a11y/label-has-associated-control": 0
+        "jsx-a11y/label-has-associated-control": 0,
+        "import/extensions": 0
+    },
+    "settings": {
+        "import/resolver": {
+            "node": {
+              "extensions": [".js", ".jsx", ".ts", ".tsx"]
+            }
+        }
     },
     "overrides": [
         {
@@ -61,7 +69,9 @@
             "rules": {
                 "react/no-children-prop": "off",
                 "react/prop-types": 0,
-                "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"]}]
+                "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx", ".tsx"]}],
+                "@typescript-eslint/explicit-function-return-type": 0,
+                "no-param-reassign": 0
             },
             "plugins": [
                 "react",
