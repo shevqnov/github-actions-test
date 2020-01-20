@@ -1,11 +1,11 @@
 import { MapStateToProps, MapDispatchToProps, connect } from 'react-redux';
 import HitsList, { StateProps, DispatchProps } from '../components/hit-list';
-import { State, fetchHits } from '../store';
+import { fetchHits } from '../store/hit/actions';
+import { AppState } from '../store';
 
-
-const mapStateToProps: MapStateToProps<StateProps, {}, State> = (state) => ({
-  hits: state.hits,
-  loading: state.loading,
+const mapStateToProps: MapStateToProps<StateProps, {}, AppState> = (state) => ({
+  hits: state.hits.hits,
+  loading: state.hits.loading,
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, {}> = (dispatch) => ({

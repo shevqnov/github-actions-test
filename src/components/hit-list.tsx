@@ -1,6 +1,6 @@
 import * as React from 'react';
 import debounce from 'lodash/debounce';
-import { Hit as HitType } from '../store';
+import { Hit as HitType } from '../models/hit';
 import Hit from './hit';
 
 export interface StateProps {
