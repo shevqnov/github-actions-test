@@ -1,12 +1,16 @@
 import axios from 'axios';
+import createSagaMiddleware from 'redux-saga';
+import {
+  call, put, all, takeLatest,
+} from 'redux-saga/effects';
 
 import {
   configureStore,
   createAction,
   createReducer,
   PayloadAction,
+  getDefaultMiddleware,
 } from '@reduxjs/toolkit';
-import { Dispatch } from 'react';
 
 export interface State {
   hits: Hit[];
@@ -16,7 +20,7 @@ export interface State {
 
 type HitType = 'song' | 'album' | 'artist'
 
-interface Hit {
+export interface Hit {
   highlights: [];
   index: string;
   type: HitType;
@@ -24,6 +28,9 @@ interface Hit {
     id: string;
     full_title: string;
     song_art_image_url: string;
+  };
+  primary_artist: {
+    id: string;
   };
 }
 
@@ -33,24 +40,35 @@ const initialState: State = {
   loading: false,
 };
 
-const fetchHits = createAction<string>('fetch hits');
+export const fetchHits = createAction<string>('fetch hits');
 const setHits = createAction<Hit[]>('set hits');
 const setError = createAction<string>('set error');
 
-export const fetchHitsThunk = (q: string) => async (
-  dispatch: Dispatch<ReturnType<typeof setHits> | ReturnType<typeof setError>>) => {
+const api = axios.create({
+  baseURL: 'https://genius.p.rapidapi.com',
+  headers: {
+    'x-rapidapi-host': 'genius.p.rapidapi.com',
+    'x-rapidapi-key': '4138f1021fmsh75636ffd9147d90p17d1a5jsn8b3645b2de09',
+  },
+});
+
+const searchHits = (q: string) => api.get(`/search?q=${q}`);
+const searchSongsByArtist = (artistId: string) => api.get(`artists/${artistId}/songs`);
+
+export function* fetchHitsWorker({ payload }: ReturnType<typeof fetchHits>) {
   try {
-    const response = await axios.get(`https://genius.p.rapidapi.com/search?q=${q}`, {
-      headers: {
-        'x-rapidapi-host': 'genius.p.rapidapi.com',
-        'x-rapidapi-key': '4138f1021fmsh75636ffd9147d90p17d1a5jsn8b3645b2de09',
-      },
-    });
-    dispatch(setHits(response.data.response.hits));
+    const response = yield call(searchHits, payload);
+    yield put(setHits(response.data.response.hits));
   } catch (e) {
-    dispatch(setError('someError'));
+    yield put(setError('someError'));
   }
-};
+}
+
+export function* rootSaga() {
+  yield all([
+    takeLatest(fetchHits.type, fetchHitsWorker),
+  ]);
+}
 
 const hitsReducer = createReducer(initialState, {
   [fetchHits.type]: (state) => {
@@ -66,11 +84,16 @@ const hitsReducer = createReducer(initialState, {
   },
 });
 
+const sagaMiddleware = createSagaMiddleware();
+
 
 const store = configureStore({
   reducer: hitsReducer,
   devTools: true,
+  middleware: [...getDefaultMiddleware(), sagaMiddleware],
 });
+
+sagaMiddleware.run(rootSaga);
 
 
 export default store;
