@@ -30,7 +30,7 @@ const HitsList: React.FC<StateProps & DispatchProps> = ({ hits, fetchHits, loadi
           {
           hits.map((hit) => (
             <Hit
-              artistId="test"
+              artistId={hit.result.primary_artist.id}
               key={hit.result.id}
               title={hit.result.full_title}
               imageUri={hit.result.song_art_image_url}

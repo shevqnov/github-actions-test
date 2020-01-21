@@ -8,8 +8,8 @@ export interface Hit {
     id: string;
     full_title: string;
     song_art_image_url: string;
-  };
-  primary_artist: {
-    id: string;
+    primary_artist: {
+      id: string;
+    };
   };
 }
