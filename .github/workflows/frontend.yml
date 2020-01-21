@@ -4,7 +4,7 @@ on: [push]
 
 jobs:
   deps:
-
+    runs-on: ubuntu-latest
     container: node:10
 
     steps:
