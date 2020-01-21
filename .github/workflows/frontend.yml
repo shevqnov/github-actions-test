@@ -4,10 +4,12 @@ on: [push]
 
 jobs:
   deps:
-    runs-on: ubuntu-latest
+    
     container: node:10
 
-    steps:
+    steps:    
+    - uses: actions/checkout@v1
+    
     - name: deps
       run: npm ci 
 
