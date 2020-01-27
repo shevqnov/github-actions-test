@@ -2,11 +2,11 @@ import { createReducer, PayloadAction } from '@reduxjs/toolkit';
 import { fetchHits, setHits, setError } from './actions';
 import { Hit } from '../../models/hit';
 
-export interface HitsState {
-    hits: Hit[];
-    error: string | null;
-    loading: boolean;
-  }
+export type HitsState = Readonly<{
+  hits: Hit[];
+  error: string | null;
+  loading: boolean;
+}>
 
 export const initialState: HitsState = {
   hits: [],

@@ -64,8 +64,8 @@ const config = {
   devtool: "source-map",
   plugins: [
     new HtmlWebpackPlugin({
-      template: require('html-webpack-template'),
-      inject: false,
+      template: 'static/index.html',
+      inject: true,
       appMountId: 'root',
     })
   ],

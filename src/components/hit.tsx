@@ -2,7 +2,7 @@ import * as React from 'react';
 import SongList from '../containers/song-list-container';
 
 interface Props {
-    artistId: string;
+    artistId: number;
     imageUri: string;
     title: string;
 }

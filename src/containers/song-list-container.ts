@@ -10,7 +10,7 @@ const mapStateToProps: MapStateToProps<StateProps, OwnProps, AppState> = (state)
 });
 
 const mapDispatchToProps: MapDispatchToProps<DispatchProps, OwnProps> = (dispatch) => ({
-  fetchSongsByArtist: (artistId: string) => dispatch(searchSongsByArtist(artistId)),
+  fetchSongsByArtist: (artistId: number) => dispatch(searchSongsByArtist(artistId)),
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(SongList);

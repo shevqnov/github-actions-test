@@ -8,11 +8,11 @@ export interface StateProps {
 }
 
 export interface OwnProps {
-    artistId: string;
+    artistId: number;
 }
 
 export interface DispatchProps {
-    fetchSongsByArtist(artistId: string): void;
+    fetchSongsByArtist(artistId: number): void;
 }
 
 const SongList: React.FC<StateProps & DispatchProps & OwnProps> = ({
@@ -30,7 +30,7 @@ const SongList: React.FC<StateProps & DispatchProps & OwnProps> = ({
             <Song
               key={song.title}
               title={song.title}
-              imageUri={song.song_art_image_url}
+              imageUri={song.song_art_image_thumbnail_url}
             />
           ))}
         </ul>

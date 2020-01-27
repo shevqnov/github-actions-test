@@ -9,4 +9,4 @@ const api = axios.create({
 });
 
 export const searchHits = (q: string) => api.get(`/search?q=${q}`);
-export const searchSongsByArtist = (artistId: string) => api.get(`artists/${artistId}/songs`);
+export const searchSongsByArtist = (artistId: number) => api.get(`artists/${artistId}/songs`);
