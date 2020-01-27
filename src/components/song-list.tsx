@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Button, List } from '@material-ui/core';
 import { Song as SongType } from '../models/song';
 import Song from './song';
 
@@ -23,9 +24,9 @@ const SongList: React.FC<StateProps & DispatchProps & OwnProps> = ({
   }, []);
   return (
     <>
-      <button onClick={onClick} type="button">Show Artist Songs</button>
+      <Button onClick={onClick}>Show Artist Songs</Button>
       {loading ? (<p>Loading ...</p>) : (
-        <ul>
+        <List>
           {songs.map((song) => (
             <Song
               key={song.title}
@@ -33,7 +34,7 @@ const SongList: React.FC<StateProps & DispatchProps & OwnProps> = ({
               imageUri={song.song_art_image_thumbnail_url}
             />
           ))}
-        </ul>
+        </List>
       )}
     </>
   );

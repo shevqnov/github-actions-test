@@ -1,5 +1,6 @@
 import * as React from 'react';
 import debounce from 'lodash/debounce';
+import { Input, CircularProgress } from '@material-ui/core';
 import { Hit as HitType } from '../models/hit';
 import Hit from './hit';
 
@@ -15,13 +16,16 @@ export interface DispatchProps {
 
 const HitsList: React.FC<StateProps & DispatchProps> = ({ hits, fetchHits, loading }) => {
   const debouncedFetchHits = debounce(fetchHits, 300);
+  React.useEffect(() => {
+    fetchHits('Placebo');
+  }, []);
   const onChange = React.useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     debouncedFetchHits(e.target.value);
   }, []);
   return (
     <>
-      <input onChange={onChange} type="text" />
-      {loading ? (<p>Loading...</p>) : (
+      <Input placeholder="Placebo" onChange={onChange} type="text" />
+      {loading ? (<CircularProgress />) : (
         <div style={{
           display: 'flex',
           flexWrap: 'wrap',

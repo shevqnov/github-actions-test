@@ -28,4 +28,5 @@ const hitsReducer = createReducer(initialState, {
   },
 });
 
+
 export default hitsReducer;

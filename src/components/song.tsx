@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { ListItem } from '@material-ui/core';
 
 export interface Props {
     title: string;
@@ -6,10 +7,10 @@ export interface Props {
 }
 
 const Song: React.FC<Props> = ({ title, imageUri }) => (
-  <div>
+  <ListItem style={{ maxHeight: 90 }}>
     <p>{title}</p>
     <img src={imageUri} alt={title} />
-  </div>
+  </ListItem>
 );
 
 export default Song;
